@@ -6,5 +6,5 @@ You may download the apk from the Repository and use it. But keep it in mind tha
 Thank you for your interest, and sorry for my laziness. I created it enough to get my job done.
 
 # Demo
-![DEMO Image](https://github,com/PratikLimbekar/transparent-camera-overlay-for-transitions/blob/main/DEMO.jpg?raw=true)
+![DEMO Image](https://github.com/PratikLimbekar/transparent-camera-overlay-for-transitions/blob/main/DEMO.jpg)
 Pratik Limbekar
