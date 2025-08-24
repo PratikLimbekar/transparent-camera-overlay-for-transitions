@@ -1,16 +1,8 @@
 # transparency_camera_overlay_for_transitions
 
-A new Flutter project.
+##NOTE:
+You may download the apk from the Repository and use it. But keep it mind that the recording DOESN'T STOP when you hit the pause button. I was too lazy to implement that. What you instead do is cut the video in between using a video editing app instead. 
 
-## Getting Started
+Thank you for your interest, and sorry for my laziness. I created it enough to get my job done.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Pratik Limbekar
