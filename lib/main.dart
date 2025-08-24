@@ -5,10 +5,14 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+//empty camera list
 List<CameraDescription> cameras = [];
 
 Future<void> main() async {
+  //he lagta for some reason
   WidgetsFlutterBinding.ensureInitialized();
+
+  //find cameras
   cameras = await availableCameras();
   runApp(const VideoApp());
 }
@@ -34,11 +38,14 @@ class CameraScreen extends StatefulWidget {
 
 class _CameraScreenState extends State<CameraScreen> {
   CameraController? _controller;
+  //future mhnje available later
   Future<void>? _initializeControllerFuture;
   bool _isRecording = false;
   int _selectedCameraIndex = 0;
   bool _isPaused = false;
+  // question mark mhnje string can be null
   String? _overlayPath;
+  //DS to represent device file
   XFile? _videoFile;
 
   @override
@@ -48,6 +55,7 @@ class _CameraScreenState extends State<CameraScreen> {
     _requestPermissions();
   }
 
+  //adnya ghene - ithe takava lagtay coz some issues in adnya ghena
   Future<void> _requestPermissions() async {
     await [
       Permission.camera,
@@ -58,6 +66,7 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   Future<void> _initCamera(int cameraIndex) async {
+    //self explanatory, won't comment the whole code bro the reason I made this app was coz I was lazy
     await _controller?.dispose();
     _controller = CameraController(
       cameras[cameraIndex],
@@ -72,6 +81,7 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   void _toggleRecording() async {
+    //_controller null hai so dart ko ullu banane vaaste ye not null ke liye ! vaparte
     if (_controller == null || !_controller!.value.isInitialized) return;
 
     if (_controller!.value.isRecordingVideo) {
@@ -116,6 +126,7 @@ class _CameraScreenState extends State<CameraScreen> {
 
   void _switchCamera() {
     if (cameras.length < 2) return;
+    //mod necessary for looping back
     _selectedCameraIndex = (_selectedCameraIndex + 1) % cameras.length;
     _initCamera(_selectedCameraIndex);
   }
@@ -184,61 +195,6 @@ class _CameraScreenState extends State<CameraScreen> {
 
       print("Gallery save failed, attempting to save to Movies folder...");
 
-      try {
-        const String moviesPath = '/storage/emulated/0/Movies';
-        final Directory moviesDir = Directory(moviesPath);
-
-        if (!await moviesDir.exists()) {
-          await moviesDir.create(recursive: true);
-        }
-
-        final String fileName = 'video_${DateTime.now().millisecondsSinceEpoch}.mp4';
-        final String destinationPath = '$moviesPath/$fileName';
-
-        await file.copy(destinationPath);
-
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text("Gallery unavailable. Video saved to Movies folder: $fileName"),
-              backgroundColor: Colors.orange,
-              duration: const Duration(seconds: 4),
-            ),
-          );
-        }
-
-        print("Video saved to Movies folder: $destinationPath");
-      } catch (moviesError) {
-        print("Movies folder save failed: $moviesError");
-
-        try {
-          const String downloadsPath = '/storage/emulated/0/Download';
-          final Directory downloadsDir = Directory(downloadsPath);
-
-          if (!await downloadsDir.exists()) {
-            await downloadsDir.create(recursive: true);
-          }
-
-          final String fileName = 'video_${DateTime.now().millisecondsSinceEpoch}.mp4';
-          final String destinationPath = '$downloadsPath/$fileName';
-
-          await file.copy(destinationPath);
-
-          if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text("Video saved to Downloads folder: $fileName"),
-                backgroundColor: Colors.blue,
-                duration: const Duration(seconds: 4),
-              ),
-            );
-          }
-
-          print("Video saved to Downloads folder: $destinationPath");
-        } catch (downloadsError) {
-          throw Exception("Failed to save video anywhere: Gallery failed, Movies folder failed, Downloads failed");
-        }
-      }
     } catch (e) {
       print("Complete save failure: $e");
       if (mounted) {
